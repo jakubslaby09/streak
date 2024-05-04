@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A czech habbit holding streak tracking web app">
+    <script type="module" src="/src/main.ts" defer></script>
+    <link rel="stylesheet" href="/src/style.css">
+    <title>Streak</title>
+</head>
+<body>
+    <details id="new-habbit">
+      <summary>Vytvořit nový návyk</summary>
+      <input type="text" id="new-name" placeholder="Název">
+      <input type="checkbox" id="new-positive" checked>
+      <label for="new-positive">Pozitivní návyk</label>
+      <button id="create-new" disabled>Vytvořit</button>
+    </details>
+    <h2>Kladné návyky</h2>
+    <section id="positive-habbits">
+      Za okamžik se načte...
+    </section>
+    <h2>Zlozvyky</h2>
+    <section id="negative-habbits">
+      Za okamžik se načte...
+    </section>
+    <h2>Záloha</h2>
+    <section id="backup">
+      <button id="restore-backup" class="outlined">Obnovit</button>
+      <button id="save-backup">Uložit</button>
+    </section>
+    <!-- Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste illo expedita cumque a? Dolore nostrum qui quia saepe ipsa eos repudiandae est tempore obcaecati, harum cum iure reprehenderit odit in nihil quasi fugit eum quam reiciendis aliquid. Eaque earum molestias eos aperiam quod. Nulla voluptas voluptates, sint sit, corporis atque architecto adipisci provident amet ex at excepturi obcaecati neque eaque molestias consequatur rem aliquam hic quam, unde recusandae animi. Ullam possimus nesciunt eum consequuntur modi dolorum, minima molestias provident quos commodi deserunt soluta vitae enim neque odit illo! Nisi, repellat. Nisi deleniti sequi molestias recusandae facere aut officia incidunt voluptatem modi aperiam eos, dolores mollitia consectetur. Dignissimos fugit fuga vel exercitationem molestias pariatur enim laudantium eaque accusamus? Iste molestias consectetur est in similique itaque velit, corporis asperiores minima nisi hic iusto quis totam inventore minus et delectus odio? Non praesentium laboriosam aut, eos illo atque autem tempora deleniti odio qui minima veniam in culpa alias quasi ullam dolor ducimus iure cupiditate repellat minus facilis assumenda eaque animi? Consequuntur quod itaque quo, ipsum dignissimos dolores placeat tempora, saepe error voluptas aut laboriosam suscipit illo illum officia debitis pariatur praesentium ea fuga modi atque nam esse animi? Reprehenderit, assumenda! Facere, accusantium molestiae? -->
+    <footer class="errors">
+    </footer>
+    <noscript>
+      <footer class="errors">
+        Nemáte povolený javascript!
+      </footer>
+    </noscript>
+</body>
+</html>
