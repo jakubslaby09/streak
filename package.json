@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc && vite build"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
