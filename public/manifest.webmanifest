@@ -1,0 +1,58 @@
+{
+    "short_name": "Streak",
+    "name": "Streak",
+    "description": "A czech habbit holding streak tracking web app",
+    "id": "cz.jakubslaby.streak",
+    "start_url": "/",
+    "scope": "/",
+    "background_color": "#dbdcf0",
+    "display": "standalone",
+    "theme_color": "#dbdcf0",
+    "icons": [
+      {
+        "src": "/icon/vector.svg",
+        "type": "image/svg+xml",
+        "sizes": "512x512",
+        "purpose": "maskable"
+      },
+      {
+        "src": "/icon/96.png",
+        "type": "image/png",
+        "sizes": "96x96",
+        "purpose": "maskable"
+      },
+      {
+        "src": "/icon/192-full.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "any"
+      },
+      {
+        "src": "/icon/192.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "maskable"
+      },
+      {
+        "src": "/icon/512.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "maskable"
+      }
+    ],
+    "shortcuts": [],
+    "screenshots": [
+      {
+        "src": "/screenshots/1.png",
+        "type": "image/png",
+        "sizes": "1170x2532",
+        "form_factor": "narrow"
+      },
+      {
+        "src": "/screenshots/2.png",
+        "type": "image/png",
+        "sizes": "1170x2532",
+        "form_factor": "narrow"
+      }
+    ]
+  }
