@@ -10,15 +10,15 @@
     "theme_color": "#dbdcf0",
     "icons": [
       {
-        "src": "/icon/vector.svg",
-        "type": "image/svg+xml",
-        "sizes": "512x512",
-        "purpose": "maskable"
-      },
-      {
         "src": "/icon/96.png",
         "type": "image/png",
         "sizes": "96x96",
+        "purpose": "maskable"
+      },
+      {
+        "src": "/icon/192.png",
+        "type": "image/png",
+        "sizes": "192x192",
         "purpose": "maskable"
       },
       {
@@ -28,16 +28,28 @@
         "purpose": "any"
       },
       {
-        "src": "/icon/192.png",
+        "src": "/icon/192-mono.png",
         "type": "image/png",
         "sizes": "192x192",
-        "purpose": "maskable"
+        "purpose": "monochrome"
       },
       {
         "src": "/icon/512.png",
         "type": "image/png",
         "sizes": "512x512",
         "purpose": "maskable"
+      },
+      {
+        "src": "/icon/1024-full.png",
+        "type": "image/png",
+        "sizes": "1024x1024",
+        "purpose": "any"
+      },
+      {
+        "src": "/icon/1024-full.svg",
+        "type": "image/svg+xml",
+        "sizes": "1024x1024",
+        "purpose": "any"
       }
     ],
     "shortcuts": [],
