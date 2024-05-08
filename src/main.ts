@@ -4,6 +4,7 @@ import { StreakTile } from "./streakTile.ts";
 import { backupCredentials, clearLogin, downloadBackup, generateBackupKey, login, uploadBackup } from "./online.ts";
 
 expect("nelze zaregistrovat service worker", async () => {
+    if(location.host == "localhost:3200") return;
     if(!("serviceWorker" in navigator)) throw "API není dostupné";
     navigator.serviceWorker.register(new URL("./sw.js", import.meta.url));
     navigator.serviceWorker.addEventListener("message", event => expect("nelze zpracovat zprávu ze service workeru", () => {
