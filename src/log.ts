@@ -22,11 +22,15 @@ export function displayError(message: string, error: unknown) {
     }
     errorFooter.setAttribute("shown", "");
     let errorString: string;
-    try {
-        errorString = JSON.stringify(error);
-    } catch (error) {
-        console.error("cannot stringify error: ", error);
-        errorString = `${error}`;
+    if(typeof error == "string") {
+        errorString = error;
+    } else {
+        try {
+            errorString = JSON.stringify(error);
+        } catch (error) {
+            console.error("cannot stringify error: ", error);
+            errorString = `${error}`;
+        }
     }
     const errorSpan = document.createElement("span");
     errorSpan.innerText = message != "" ? `${message}: ${errorString}` : errorString;
