@@ -31,7 +31,7 @@ export interface HabbitEntry {
 }
 function parseHabbitEntry(entry: string[]): HabbitEntry {
     const values = Object.values(entry);
-    if(values.length < 4) throw "habbit entry has less than 4 values";
+    if(values.length < 4) throw `habbit entry has less than 4 values: ${JSON.stringify(values)}`;
     return {
         date: new Date(values[0]!),
         habbitTitle: values[1],
