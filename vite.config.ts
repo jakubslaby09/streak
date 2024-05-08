@@ -11,4 +11,11 @@ export default defineConfig({
     port: 3200,
     host: true,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: "[name].js",
+      }
+    }
+  },
 })

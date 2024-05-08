@@ -1,5 +1,6 @@
 const errorFooter = document.querySelector<"footer">("body > footer.errors" as any);
 
+// TODO: grouping
 export function expect<T>(message: string, callback: () => T): T extends Promise<any> ? T : T | null {
     try {
         const res = callback();

@@ -3,6 +3,20 @@ import { displayError, expect } from "./log.ts";
 import { StreakTile } from "./streakTile.ts";
 import { backupCredentials, clearLogin, downloadBackup, generateBackupKey, login, uploadBackup } from "./online.ts";
 
+expect("nelze zaregistrovat service worker", async () => {
+    if(!("serviceWorker" in navigator)) throw "API není dostupné";
+    navigator.serviceWorker.register(new URL("./sw.js", import.meta.url));
+    navigator.serviceWorker.addEventListener("message", event => expect("nelze zpracovat zprávu ze service workeru", () => {
+        if(!("error" in event.data)) throw `neznámá zpráva: ${event.data}`;
+        if(!("message" in event.data) || typeof event.data.message != "string") throw `zpráva o chybě je prázdná: ${event.data}`;
+        displayError(`sw: ${event.data.message}`, event.data.error);
+    }));
+    navigator.serviceWorker.addEventListener("controllerchange", _ => {
+        navigator.serviceWorker.controller?.postMessage("x-log");
+    });
+    navigator.serviceWorker.controller?.postMessage("x-log");
+});
+
 const positiveSection = document.querySelector<"section">("body > section#positive-habbits" as any);
 const negativeSection = document.querySelector<"section">("body > section#negative-habbits" as any);
 const backupSection = document.querySelector<"section">("body > section#backup" as any);
