@@ -1,16 +1,16 @@
 const errorFooter = document.querySelector<"footer">("body > footer.errors" as any);
 
-export function expect<T>(message: string, callback: () => T): T | null {
+export function expect<T>(message: string, callback: () => T): T extends Promise<any> ? T : T | null {
     try {
         const res = callback();
         if(res instanceof Promise) {
-            return res.catch(error => displayError(message, error)) as T;
+            return res.catch(error => displayError(message, error)) as T extends Promise<any> ? T : T | null;
         } else {
-            return res;
+            return res as T extends Promise<any> ? T : T | null;
         }
     } catch (error) {
         displayError(message, error);
-        return null;
+        return null as T extends Promise<any> ? T : T | null;
     }
 }
 

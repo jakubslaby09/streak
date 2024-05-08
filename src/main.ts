@@ -1,6 +1,7 @@
 import { Habbit, habbits, parseHabbits, unparseHabbits, writeHabbits } from "./habbits.ts";
 import { displayError, expect } from "./log.ts";
 import { StreakTile } from "./streakTile.ts";
+import { backupCredentials, clearLogin, downloadBackup, generateBackupKey, login, uploadBackup } from "./online.ts";
 
 const positiveSection = document.querySelector<"section">("body > section#positive-habbits" as any);
 const negativeSection = document.querySelector<"section">("body > section#negative-habbits" as any);
@@ -73,7 +74,6 @@ expect("nelze zprovoznit zálohování", () => {
     
     saveButton.addEventListener("click", () => expect("nelze uložit zálohu", () => {
         const backup = unparseHabbits(habbits);
-        // if(!('showSaveFilePicker' in window)) throw "potřebné API není podporováno";
         const url = URL.createObjectURL(new Blob([backup]));
         const link = document.createElement("a");
         link.href = url;
@@ -102,7 +102,101 @@ expect("nelze zprovoznit zálohování", () => {
         habbits.push(...parsed);
         loadHabbits();
     }));
+
+    // TODO: cleanup
+    expect("nelze zprovoznit přihlašování a online zálohy", () => {
+        const uploadButton = backupSection.querySelector<"button">('button#upload-backup' as any);
+        if(uploadButton == null) throw 'missing body > section#backup > button#upload-backup';
+        const downloadButton = backupSection.querySelector<"button">('button#download-backup' as any);
+        if(downloadButton == null) throw 'missing body > section#backup > button#download-backup';
+        const backupKey = backupSection.querySelector<"input">('input#backup-key' as any);
+        if(backupKey == null) throw 'missing body > section#backup > input#backup-key';
+        const loginButton = backupSection.querySelector<"button">('button#login' as any);
+        if(loginButton == null) throw 'missing body > section#backup > button#login';
+        const clipboardButton = backupSection.querySelector<"button">('button#copy-backup-key' as any);
+        if(clipboardButton == null) throw 'missing body > section#backup > button#copy-backup-key';
+
+        if(backupCredentials != null) {
+            backupKey.value = backupCredentials.key;
+            backupKey.readOnly = true;
+            saveButton.className = "outlined";
+            uploadButton.style.display = "";
+            downloadButton.style.display = "";
+        }
+        
+        asyncButton(loginButton, () => expect("nelze se přihlásit", async () => {
+            if(backupCredentials != null) {
+                // TODO: revoke tokens
+                clearLogin();
+                onInput();
+            } else {
+                loginButton.disabled = true;
+                if(backupKey.value.length == 0) {
+                    const [_, string] = await generateBackupKey();
+                    await login(string, true);
+                } else {
+                    await login(backupKey.value);
+                }
+                onInput();
+                loginButton.disabled = false;
+            }
+
+            backupKey.readOnly = backupCredentials != null;
+            saveButton.className = backupCredentials == null ? "outlined" : "";
+            uploadButton.style.display = backupCredentials == null ? "none" : "";
+            downloadButton.style.display = backupCredentials == null ? "none" : "";
+        }));
+
+        const onInput = () => {
+            if(backupCredentials != null) {
+                loginButton.innerText = "Odhlásit se";
+                loginButton.disabled = false;
+            } else if(backupKey.value.length == 0) {
+                loginButton.innerText = "Registrovat";
+                loginButton.disabled = false;
+            } else {
+                loginButton.innerText = "Přihlásit se";
+                loginButton.disabled = backupKey.value.length != 24;
+            }
+        };
+        onInput();
+        backupKey.addEventListener("input", onInput);
+
+        clipboardButton.addEventListener("click", () => expect("nelze pracovat se schránkou", async () => {
+            if(backupKey.value.length == 0) {
+                backupKey.value = await navigator.clipboard.readText();
+                onInput();
+            } else {
+                await navigator.clipboard.writeText(backupKey.value);
+            }
+        }));
+
+        asyncButton(uploadButton, () => expect("nelze nahrát zálohu", async () => {
+            if(backupCredentials == null) throw "nejste přihlášeni";
+            await uploadBackup(backupCredentials, unparseHabbits(habbits));
+        }));
+        
+        asyncButton(downloadButton, () => expect("nelze stáhnout a obnovit zálohu", async () => {
+            if(backupCredentials == null) throw "nejste přihlášeni";
+            const parsed = parseHabbits(await downloadBackup(backupCredentials));
+            writeHabbits(parsed);
+            habbits.length = 0;
+            habbits.push(...parsed);
+            loadHabbits();
+        }));
+    });
 });
+
+function asyncButton(button: HTMLButtonElement, onclick: (this: HTMLButtonElement, ev: MouseEvent) => Promise<any>) {
+    button.addEventListener("click", function(e) {
+        button.disabled = true;
+        button.setAttribute("waiting", "");
+        onclick.call(this, e).finally(() => {
+            button.disabled = false;
+            button.removeAttribute("waiting");
+        });
+    });
+}
 
 (window as any).parse = parseHabbits;
 (window as any).unparse = unparseHabbits;

@@ -95,9 +95,18 @@ body > section#backup {
   display: flex;
   gap: 1rem;
   padding: 0 1rem 1rem;
+  flex-wrap: wrap;
 }
-body > section#backup > button {
-  flex: 1;
+body > section#backup > hr {
+  flex-basis: 100%;
+}
+body > section#backup > button:not(.icon) {
+  flex: 1 1;
+}
+body > section#backup > input {
+  margin: 0;
+  max-width: calc(100% - 3rem);
+  flex: 1 1;
 }
 streak-tile::after {
   content: "";
@@ -241,6 +250,7 @@ input[type="checkbox"]:is(:hover, :focus)::after {
 
 button {
   cursor: pointer;
+  position: relative;
   height: 2rem;
   border: none;
   border-radius: 0.85rem;
@@ -268,17 +278,54 @@ button.outlined, button.outlined:is(:hover, :focus) {
   outline: solid 0.15rem var(--current);
   outline-offset: -0.15rem;
 }
+button.outlined:disabled {
+  cursor: unset;
+  opacity: 0.5;
+}
 button.outlined:not(:hover, :focus) {
   transition:
-    background var(--transition),
-    color var(--transition);
+  background var(--transition),
+  color var(--transition);
 }
-button.outlined:is(:active, :not(:hover, :focus)) {
+button.outlined:is(:active, :disabled, :not(:hover, :focus)) {
   background: none;
   color: var(--current);
 }
+button.icon {
+  width: 2rem;
+  padding: 0;
+}
+button[waiting]::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2rem;
+  background: radial-gradient(circle at center, transparent calc(70% - 0.3rem), currentColor calc(70% - 0.3rem), currentColor 70%, transparent 70%);
+  clip-path: inset(50% 0 0 0);
+  transform: scale(50%);
+  animation: button-waiting 500ms linear infinite;
+}
+/* TODO */
+/* button[failed]::before {
+  content: "!";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2.05rem;
+  line-height: 2rem;
+  color: var(--current);
+  background: #fff;
+  clip-path: polygon(30% 75%, 25% 70%, 45% 25%, 55% 25%, 75% 70%, 70% 75%);
+  font-family: monospace;
+  font-size: 0.8rem;
+  vertical-align: bottom;
+} */
+@keyframes button-waiting {
+  to {
+    transform: scale(50%) rotate(360deg);
+  }
+}
 
-input[type="text"] {
+input:is([type="text"], [type="password"]) {
   height: 2rem;
   margin: 0.5rem 0;
   border: none;
@@ -289,6 +336,6 @@ input[type="text"] {
   font-size: inherit;
   font-family: inherit;
 }
-input[type="text"]:is(:hover, :focus):not(:disabled) {
+input:is([type="text"], [type="password"]):is(:hover, :focus):not(:disabled) {
   outline-offset: 0.1rem;
 }
