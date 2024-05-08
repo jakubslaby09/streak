@@ -250,6 +250,7 @@ button {
   color: #fff;
   font-family: inherit;
   font-weight: 700;
+  text-wrap: nowrap;
   transition:
     outline var(--transition),
     outline-offset var(--transition);
