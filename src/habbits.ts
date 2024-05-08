@@ -68,7 +68,7 @@ export function unparseHabbits(habbits: Habbit[]) {
             entries.push([
                 entry.date.toISOString(),
                 habbit.title,
-                entry.success ? "x" : "",
+                entry.success ? "x" : " ",
                 entry.notes,
             ]);
         }
