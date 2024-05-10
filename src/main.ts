@@ -6,7 +6,7 @@ import { backupCredentials, clearLogin, downloadBackup, generateBackupKey, login
 expect("nelze zaregistrovat service worker", async () => {
     if(location.host == "localhost:3200") return;
     if(!("serviceWorker" in navigator)) throw "API není dostupné";
-    navigator.serviceWorker.register(new URL("./sw.js", import.meta.url));
+    navigator.serviceWorker.register(new URL("/sw.js", import.meta.url));
     navigator.serviceWorker.addEventListener("message", event => expect("nelze zpracovat zprávu ze service workeru", () => {
         if(!("error" in event.data)) throw `neznámá zpráva: ${event.data}`;
         if(!("message" in event.data) || typeof event.data.message != "string") throw `zpráva o chybě je prázdná: ${event.data}`;
