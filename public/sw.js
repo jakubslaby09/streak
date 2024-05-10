@@ -64,9 +64,10 @@ async function intercept(e) {
         console.log("%c[sw]", "color: red", "cannot check for updates", res);
         return cached;
     };
-    if(checkUpdate(res, cached)) {
-        await (await cache).put(e.request, res);
-    }
+    // TODO: debug on firebase hosting
+    // if(checkUpdate(res, cached)) {
+    await (await cache).put(e.request, res);
+    // }
     return cached;
 }
 
