@@ -76,6 +76,13 @@ function loadHabbits() {
             const section = habbit.positive ? positiveSection : negativeSection;
             section.appendChild(new StreakTile(habbit, () => writeHabbits(habbits)));
         }
+        // TODO: use pseudoelements
+        if(positiveSection.childNodes.length == 0) {
+            positiveSection.innerHTML = '<p style="text-align: center">nic tu není...<br><br></p>';
+        }
+        if(negativeSection.childNodes.length == 0) {
+            negativeSection.innerHTML = '<p style="text-align: center">nic tu není...<br><br></p>';
+        }
     });
 }
 loadHabbits();
