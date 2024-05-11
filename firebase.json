@@ -1,15 +1,26 @@
 {
-    "hosting": {
-        "site": "streeak",
-        "public": "dist",
-        "ignore": [
-            "firebase.json",
-            "**/.*",
-            "**/node_modules/**"
-        ],
-        "rewrites": [ {
-            "source": "**",
-            "destination": "/index.html"
-        } ]
-    }
+    "hosting": [
+        {
+            "site": "streeak",
+            "public": "dist",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ],
+            "rewrites": [ {
+                "source": "**",
+                "destination": "/index.html"
+            } ]
+        },
+        {
+            "site": "streak-dev",
+            "public": "dist",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ]
+        }
+    ]
 }
