@@ -46,6 +46,12 @@ body > details#new-habbit {
 body > details#new-habbit[open] {
   padding-bottom: 1rem;
   background-color: var(--green-container);
+  animation: details-open var(--transition);
+}
+@keyframes details-open {
+  from {
+    transform: translateY(-1%) scaleY(0.98);
+  }
 }
 body > details#new-habbit[open][negative] {
   background-color: var(--red-container);
