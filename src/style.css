@@ -326,16 +326,18 @@ button[waiting]::before {
 }
 
 input:is([type="text"], [type="password"]) {
+  transition: outline-offset var(--transition);
   height: 2rem;
   margin: 0.5rem 0;
   border: none;
   border-radius: 0.85rem;
   padding: 0 1rem;
   box-sizing: border-box;
-  outline: solid var(--current) 0.1rem;
+  outline: solid var(--current) 0.15rem;
+  outline-offset: -0.1rem;
   font-size: inherit;
   font-family: inherit;
 }
 input:is([type="text"], [type="password"]):is(:hover, :focus):not(:disabled) {
-  outline-offset: 0.1rem;
+  outline-offset: 0;
 }
