@@ -163,8 +163,9 @@ expect("nelze zprovoznit zálohování", () => {
                 loginButton.disabled = false;
             }
 
+            console.log(backupCredentials);
             backupKey.readOnly = backupCredentials != null;
-            saveButton.className = backupCredentials == null ? "outlined" : "";
+            saveButton.className = backupCredentials == null ? "" : "outlined";
             uploadButton.style.display = backupCredentials == null ? "none" : "";
             downloadButton.style.display = backupCredentials == null ? "none" : "";
         }));
