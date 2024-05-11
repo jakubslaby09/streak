@@ -40,10 +40,11 @@ body > details#new-habbit {
   --current: var(--green);
   --current-container: var(--green-container);
   --current-surface: var(--green-surface);
-  padding: 1rem;
+  padding: 0 1rem;
   background-color: var(--primary-container);
 }
 body > details#new-habbit[open] {
+  padding-bottom: 1rem;
   background-color: var(--green-container);
 }
 body > details#new-habbit[open][negative] {
@@ -53,6 +54,7 @@ body > details#new-habbit[open][negative] {
   --current-surface: var(--red-surface);
 }
 body > details#new-habbit > summary {
+  padding: 1rem 0;
   cursor: pointer;
 }
 body > details#new-habbit[open] > summary {
