@@ -225,8 +225,9 @@ input[type="checkbox"] {
   transform: scale(0.75);
 }
 input[type="checkbox"]::after {
+  transition: transform var(--transition);
   content: '✔';
-  transform: scale(1.5);
+  transform: scale(1.5) rotate(17deg);
   position: absolute;
   inset: 0;
   color: transparent;
@@ -234,7 +235,7 @@ input[type="checkbox"]::after {
   outline: 0.1rem solid var(--current);
   outline-offset: -0.1rem;
   background-color: var(--current-container);
-  font-size: 150%;
+  font-size: 115%;
   text-align: center;
   line-height: 1.5rem;
   vertical-align: middle;
@@ -243,6 +244,7 @@ input[type="checkbox"]::after {
 input[type="checkbox"]:checked::after {
   color: #fff;
   background-color: var(--current);
+  transform: scale(1.5);
 }
 input[type="checkbox"]:is(:hover, :focus)::after {
   outline-offset: 0.1rem;
