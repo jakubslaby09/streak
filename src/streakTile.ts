@@ -1,6 +1,7 @@
 import { Habbit } from "./habbits";
 import { expect } from "./log";
 
+const STREAK_RESERVE = 1000 * 60 * 60 * 6;
 const STREAK_STEP = 1000 * 60 * 60 * 24;
 
 export class StreakTile extends HTMLElement {
@@ -59,7 +60,7 @@ export class StreakTile extends HTMLElement {
         }
         const lastEntry = this.habbit.entries[this.habbit.entries.length - 1]!;
         const timeLeft = this.habbit.positive
-            ? STREAK_STEP - new Date().getTime() + lastEntry.date.getTime()
+            ? (STREAK_STEP + STREAK_RESERVE) - new Date().getTime() + lastEntry.date.getTime()
             : STREAK_STEP - (new Date().getTime() - lastEntry.date.getTime()) % STREAK_STEP;
         if(timeLeft > 0) {
             // TODO: format time
@@ -95,7 +96,7 @@ export function streaks(habbit: Habbit, now = new Date()): number[] {
                 lastTime = null;
                 continue;
             }
-            if(lastTime != null && entry.date.getTime() - lastTime > STREAK_STEP) {
+            if(lastTime != null && entry.date.getTime() - lastTime > (STREAK_STEP + STREAK_RESERVE)) {
                 // console.log(entry.date, `a late entry; streak ended at ${currentStreak}, starting a new one`);
                 streaks.push(currentStreak);
                 currentStreak = 1;
@@ -112,7 +113,7 @@ export function streaks(habbit: Habbit, now = new Date()): number[] {
             // console.log(entry.date, `streak at ${currentStreak}`);
         }
         streaks.push(currentStreak);
-        if(currentStreak > 0 && (!lastTime || now.getTime() - lastTime > STREAK_STEP)) {
+        if(currentStreak > 0 && (!lastTime || now.getTime() - lastTime > (STREAK_STEP + STREAK_RESERVE))) {
             // console.log(now, `no new entry; adding streak 0`);
             streaks.push(0);
         }

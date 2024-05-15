@@ -62,7 +62,7 @@ describe("positive habbit streaks", () => {
                 notes: "",
             },
         ];
-        expect(streaks(h, new Date("4-23-2024 5:02"))).toEqual([3, 0]);
+        expect(streaks(h, new Date("4-23-2024 11:02"))).toEqual([3, 0]);
     });
     test("resets streak on an unsuccessful entry", () => {
         h.entries = [
@@ -97,7 +97,7 @@ describe("positive habbit streaks", () => {
                 notes: "",
             },
         ];
-        expect(streaks(h, new Date("4-23-2024 5:02"))).toEqual([2, 1, 0]);
+        expect(streaks(h, new Date("4-24-2024 5:02"))).toEqual([2, 1, 0]);
     });
 });
 
