@@ -84,9 +84,9 @@ streak-tile {
   gap: 0.5rem;
   background: var(--current-surface);
   grid-template-areas:
-    "name timeLeft button"
-    "streaks streaks button";
-  grid-template-columns: auto 3rem 5rem;
+    "delete name timeLeft button"
+    "streaks streaks streaks button";
+  grid-template-columns: 2rem auto minmax(auto, 3rem) 5rem;
   align-items: center;
 }
 body > section#positive-habbits > streak-tile {
@@ -125,9 +125,16 @@ streak-tile::after {
 }
 streak-tile > h3 {
   position: relative;
-  margin: 0 0 0.5rem;
+  margin: 0;
   font-weight: inherit;
   grid-area: name;
+  line-height: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  z-index: 1;
+}
+streak-tile > button.delete {
+  grid-area: delete;
   z-index: 1;
 }
 streak-tile > span.timeLeft {
@@ -314,6 +321,27 @@ button[waiting]::before {
   clip-path: inset(50% 0 0 0);
   transform: scale(50%);
   animation: button-waiting 500ms linear infinite;
+}
+button[safety][open]::before {
+  transform: translateY(calc(-100% + 0.4rem));
+}
+button[safety]:not([open]):focus::before {
+  transition: transform var(--transition);
+  transform: translateY(-0.5rem);
+}
+button[safety]::before {
+  transition: transform var(--transition);
+  content: attr(safety);
+  position: absolute;
+  inset: 0;
+  outline: inherit;
+  outline-offset: inherit;
+  border-radius: 0.85rem;
+  background-color: var(--current-surface);
+  color: var(--current);
+  line-height: 2rem;
+  vertical-align: middle;
+  pointer-events: none;
 }
 /* TODO */
 /* button[failed]::before {

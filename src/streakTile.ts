@@ -1,11 +1,13 @@
-import { Habbit } from "./habbits";
+import { Habbit, habbits } from "./habbits";
 import { expect } from "./log";
+import { SafetyButton } from "./safetyButton";
 
 const STREAK_RESERVE = 1000 * 60 * 60 * 6;
 const STREAK_STEP = 1000 * 60 * 60 * 24;
 
 export class StreakTile extends HTMLElement {
     name: HTMLHeadingElement;
+    deleteButton: SafetyButton;
     streaks: HTMLDivElement;
     entryButton: HTMLButtonElement;
     timeLeft: HTMLSpanElement;
@@ -15,6 +17,10 @@ export class StreakTile extends HTMLElement {
         this.name = document.createElement("h3");
         this.name.innerText = habbit.title;
         super.appendChild(this.name);
+        this.deleteButton = new SafetyButton("×", "☢️");
+        this.deleteButton.className = "delete icon outlined";
+        this.deleteButton.addEventListener("click", _ => expect("nelze smazat zvyk", () => this.delete()));
+        super.appendChild(this.deleteButton);
         this.timeLeft = document.createElement("span");
         this.timeLeft.className = "timeLeft";
         super.appendChild(this.timeLeft);
@@ -74,6 +80,14 @@ export class StreakTile extends HTMLElement {
         } else {
             this.timeLeft.innerText = "";
         }
+    }
+
+    private delete() {
+        const index = habbits.indexOf(this.habbit);
+        if(index == -1) throw "nelze najít zvyk ke smazání";
+        habbits.splice(index, 1);
+        this.save();
+        super.remove();
     }
 
     disconnectedCallback() {
