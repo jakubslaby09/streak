@@ -324,6 +324,12 @@ button[waiting]::before {
   transform: scale(50%);
   animation: button-waiting 500ms linear infinite;
 }
+button[safety]:not([open]) {
+  cursor: grab;
+}
+button[safety]:not([open]):active {
+  cursor: grabbing;
+}
 button[safety][open]::before {
   transform: translateY(calc(-100% + 0.4rem));
 }
