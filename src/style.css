@@ -146,6 +146,7 @@ streak-tile > div.streaks {
   display: flex;
   width: 100%;
   height: 2rem;
+  padding-bottom: 0.1rem;
   gap: 0.1rem;
   justify-content: start;
   /* flex-direction: row-reverse; */
@@ -155,7 +156,8 @@ streak-tile > div.streaks {
 }
 @supports not selector(::-webkit-scrollbar) {
   streak-tile > div.streaks {
-    scrollbar-width: none;
+    scrollbar-width: thin;
+    padding-bottom: 0;
   }
 }
 streak-tile > div.streaks::-webkit-scrollbar {
