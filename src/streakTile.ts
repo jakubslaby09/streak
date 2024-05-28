@@ -72,7 +72,7 @@ export class StreakTile extends HTMLElement {
             // TODO: format time
             this.timeLeft.innerText = `${(timeLeft / 1000 / 60 / 60).toFixed(1)} h`;
             if(!this.habbit.positive) {
-                const last = this.streaks.childNodes[this.streaks.childNodes.length - 1];
+                const last = this.streaks.childNodes[0];
                 if(!(last instanceof HTMLSpanElement)) return;
                 const streak = Math.floor((new Date().getTime() - lastEntry.date.getTime()) / STREAK_STEP);
                 last.innerText = streak.toString();

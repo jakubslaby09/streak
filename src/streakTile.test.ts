@@ -176,7 +176,25 @@ describe("negative habbit streaks", () => {
                 success: false,
                 notes: "",
             },
-        ]
+        ];
         expect(streaks(h, new Date("5-6-2024 13:01"))).toEqual([1, 0, 2, 0]);
+    });
+
+    test("issue #1: https://github.com/jakubslaby09/streak/issues/1", () => {
+        h.entries = [
+            {
+                date: new Date("2024-05-15T04:24:49.287Z"),
+                habbitTitle: "redacted",
+                success: true,
+                notes: "",
+            },
+            {
+                date: new Date("2024-05-28T06:09:23.773Z"),
+                habbitTitle: "redacted",
+                success: false,
+                notes: "",
+            }
+        ];
+        expect(streaks(h, new Date("5-28-2024 18:01"))).toEqual([13, 0]);
     });
 });
