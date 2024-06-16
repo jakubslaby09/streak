@@ -39,6 +39,9 @@ body > h2 {
   text-align: center;
 }
 
+details[open] {
+  animation: details-open var(--transition);
+}
 body > details#new-habbit {
   transition: background-color var(--hero-transition);
   --current: var(--green);
@@ -50,7 +53,6 @@ body > details#new-habbit {
 body > details#new-habbit[open] {
   padding-bottom: 1rem;
   background-color: var(--green-container);
-  animation: details-open var(--transition);
 }
 @keyframes details-open {
   from {
@@ -84,12 +86,13 @@ streak-tile {
   position: relative;
   display: grid;
   margin: 1rem 0;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0.5rem 0;
   gap: 0.5rem;
   background: var(--current-surface);
   grid-template-areas:
     "delete name timeLeft button"
-    "streaks streaks streaks button";
+    "streaks streaks streaks button"
+    "entries entries entries entries";
   grid-template-columns: 2rem auto minmax(auto, 3rem) 5rem;
   align-items: center;
 }
@@ -102,23 +105,6 @@ body > section#negative-habbits > streak-tile {
   --current: var(--red);
   --current-container: var(--red-container);
   --current-surface: var(--red-surface);
-}
-body > section#backup {
-  display: flex;
-  gap: 1rem;
-  padding: 0 1rem 1rem;
-  flex-wrap: wrap;
-}
-body > section#backup > hr {
-  flex-basis: 100%;
-}
-body > section#backup > button:not(.icon) {
-  flex: 1 1;
-}
-body > section#backup > input {
-  margin: 0;
-  max-width: calc(100% - 3rem);
-  flex: 1 1;
 }
 streak-tile::after {
   content: "";
@@ -157,6 +143,24 @@ streak-tile > div.streaks {
   direction: rtl;
   overflow-x: scroll;
   overflow-y: hidden;
+}
+streak-tile > details.entries {
+  display: grid;
+  grid-area: entries;
+  z-index: 1;
+}
+streak-tile > details.entries[open] {
+  padding-bottom: 1rem;
+}
+streak-tile > details.entries > summary {
+  grid-column-start: entries;
+  text-align: center;
+  padding-bottom: 1rem;
+  cursor: pointer;
+}
+streak-tile > details.entries > :not(summary) {
+  grid-column: name;
+  margin-left: 2.5rem;
 }
 @supports not selector(::-webkit-scrollbar) {
   streak-tile > div.streaks {
@@ -202,6 +206,24 @@ streak-tile > button {
   from {
     transform: translateY(-50%) rotate(70deg);
   }
+}
+
+body > section#backup {
+  display: flex;
+  gap: 1rem;
+  padding: 0 1rem 1rem;
+  flex-wrap: wrap;
+}
+body > section#backup > hr {
+  flex-basis: 100%;
+}
+body > section#backup > button:not(.icon) {
+  flex: 1 1;
+}
+body > section#backup > input {
+  margin: 0;
+  max-width: calc(100% - 3rem);
+  flex: 1 1;
 }
 
 body > footer.errors:not([shown]) {

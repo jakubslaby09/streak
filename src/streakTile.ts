@@ -12,6 +12,8 @@ export class StreakTile extends HTMLElement {
     entryButton: HTMLButtonElement;
     timeLeft: HTMLSpanElement;
     timeLeftUpdater: number | NodeJS.Timeout;
+    entries: HTMLDetailsElement;
+    entriesSummary: HTMLElement;
     constructor(public habbit: Habbit, private save: () => any) {
         super();
         this.name = document.createElement("h3");
@@ -30,10 +32,17 @@ export class StreakTile extends HTMLElement {
         this.entryButton = document.createElement("button");
         this.entryButton.innerText = habbit.positive ? "Splnit" : "Porušit";
         this.entryButton.addEventListener("click", _ => expect("nelze přidat záznam", () => this.addEntry()));
+        // TODO: this.entryButton.addEventListener("contextmenu", _ => /* Add a record with a note */)
         super.appendChild(this.entryButton);
         this.timeLeftUpdater = setInterval(() => this.updateTimeLeft(), 30000);
+        this.entries = document.createElement("details");
+        this.entries.className = "entries";
+        this.entriesSummary = document.createElement("summary");
+        this.entriesSummary.innerText = "Historie"
+        this.entries.appendChild(this.entriesSummary);
+        super.appendChild(this.entries);
         
-        this.updateStreaks();
+        this.updateEntries();
     }
 
     private addEntry() {
@@ -44,13 +53,25 @@ export class StreakTile extends HTMLElement {
             success: this.habbit.positive,
         });
         this.save();
-        this.updateStreaks();
+        this.updateEntries();
     }
 
+    private updateEntries() {
+        // TODO: check performance
+        this.entries.querySelectorAll(":not(summary)").forEach(child => child.remove())
+
+        for(const record of this.habbit.entries) {
+            if(record.success != this.habbit.positive) continue;
+            const entry = document.createElement("div");
+            entry.innerText = `${record.date.toLocaleString("cz", {weekday: "short", month: "2-digit", day: "2-digit", year: "2-digit"})} ${record.notes}`
+            this.entries.insertAdjacentElement("afterbegin", entry);
+        }
+        this.updateStreaks()
+    }
     private updateStreaks() {
         this.streaks.innerHTML = "";
         if(this.habbit.entries.length == 0) return;
-        for (const streak of streaks(this.habbit).reverse()) {
+        for(const streak of streaks(this.habbit).reverse()) {
             const span = document.createElement("span");
             span.innerHTML = streak.toString();
             this.streaks.appendChild(span);
@@ -59,7 +80,7 @@ export class StreakTile extends HTMLElement {
     }
 
     private updateTimeLeft() {
-        if (this.habbit.entries.length == 0) {
+        if(this.habbit.entries.length == 0) {
             // TODO: help text
             this.timeLeft.innerText = "";
             return;
