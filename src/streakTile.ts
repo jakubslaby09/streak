@@ -38,7 +38,6 @@ export class StreakTile extends HTMLElement {
         this.entries = document.createElement("details");
         this.entries.className = "entries";
         this.entriesSummary = document.createElement("summary");
-        this.entriesSummary.innerText = "Historie"
         this.entries.appendChild(this.entriesSummary);
         super.appendChild(this.entries);
         
@@ -60,6 +59,9 @@ export class StreakTile extends HTMLElement {
         // TODO: check performance
         this.entries.querySelectorAll(":not(summary)").forEach(child => child.remove())
 
+        const count = this.habbit.entries.length - 1
+        this.entriesSummary.style.display = count == 0 ? "none" : ""
+        this.entriesSummary.innerText = `${count} záznam${count >= 5 ? "ů" : count != 1 ? "y" : ""}`
         for(const record of this.habbit.entries) {
             if(record.success != this.habbit.positive) continue;
             const entry = document.createElement("div");
