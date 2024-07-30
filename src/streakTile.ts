@@ -65,7 +65,19 @@ export class StreakTile extends HTMLElement {
         for(const record of this.habbit.entries) {
             if(record.success != this.habbit.positive) continue;
             const entry = document.createElement("div");
-            entry.innerText = `${record.date.toLocaleString("cz", {weekday: "short", month: "2-digit", day: "2-digit", year: "2-digit"})} ${record.notes}`
+            const time = document.createElement("span");
+            time.innerText = record.date.toLocaleString("cz", {weekday: "short", month: "2-digit", day: "2-digit", year: "2-digit"});
+            entry.appendChild(time);
+            const notes = document.createElement("input");
+            notes.type = "text";
+            notes.className = "plain";
+            notes.value = record.notes;
+            notes.placeholder = "žádné poznámky";
+            notes.addEventListener("input", () => {
+                record.notes = notes.value;
+                this.save();
+            });
+            entry.appendChild(notes);
             this.entries.insertAdjacentElement("afterbegin", entry);
         }
         this.updateStreaks()

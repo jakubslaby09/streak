@@ -92,7 +92,7 @@ streak-tile {
   grid-template-areas:
     "delete name timeLeft button"
     "streaks streaks streaks button"
-    "entries entries entries entries";
+    "x entries entries entries";
   grid-template-columns: 2rem auto minmax(auto, 3rem) 5rem;
   align-items: center;
 }
@@ -159,8 +159,19 @@ streak-tile > details.entries > summary {
   cursor: pointer;
 }
 streak-tile > details.entries > :not(summary) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
   grid-column: name;
-  margin-left: 2.5rem;
+}
+streak-tile > details.entries > :not(summary) > span {
+  text-wrap: nowrap;
+  width: 11ch;
+}
+streak-tile > details.entries > :not(summary) > input[type="text"].plain {
+  padding: 0.25rem 0;
+  flex: 1 0;
+  width: 10rem;
 }
 @supports not selector(::-webkit-scrollbar) {
   streak-tile > div.streaks {
@@ -396,7 +407,6 @@ button[safety]::before {
     transform: scale(50%) rotate(360deg);
   }
 }
-
 input:is([type="text"], [type="password"]) {
   transition: outline-offset var(--transition);
   height: 2rem;
@@ -412,4 +422,15 @@ input:is([type="text"], [type="password"]) {
 }
 input:is([type="text"], [type="password"]):is(:hover, :focus):not(:disabled) {
   outline-offset: 0;
+}
+input:is([type="text"], [type="password"]).plain {
+  outline: unset;
+  height: 1.15rem;
+  margin: 0;
+  border-bottom: solid transparent 0.15rem;
+  border-radius: 0;
+  background: none;
+}
+input:is([type="text"], [type="password"]).plain:is(/* :hover, */ :focus):not(:disabled) {
+  border-bottom-color: var(--current);
 }
