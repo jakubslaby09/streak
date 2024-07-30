@@ -32,7 +32,6 @@ export class StreakTile extends HTMLElement {
         this.entryButton = document.createElement("button");
         this.entryButton.innerText = habbit.positive ? "Splnit" : "Porušit";
         this.entryButton.addEventListener("click", _ => expect("nelze přidat záznam", () => this.addEntry()));
-        // TODO: this.entryButton.addEventListener("contextmenu", _ => /* Add a record with a note */)
         super.appendChild(this.entryButton);
         this.timeLeftUpdater = setInterval(() => this.updateTimeLeft(), 30000);
         this.entries = document.createElement("details");
