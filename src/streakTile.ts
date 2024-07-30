@@ -59,10 +59,12 @@ export class StreakTile extends HTMLElement {
         // TODO: check performance
         this.entries.querySelectorAll(":not(summary)").forEach(child => child.remove())
 
-        const count = this.habbit.entries.length - 1
-        this.entriesSummary.style.display = count == 0 ? "none" : ""
-        this.entriesSummary.innerText = `${count} záznam${count >= 5 ? "ů" : count != 1 ? "y" : ""}`
-        for(const record of this.habbit.entries) {
+        const count = this.habbit.entries.length - 1;
+        this.entriesSummary.style.display = count == 0 ? "none" : "";
+        this.entriesSummary.innerText = `${count} záznam${count >= 5 ? "ů" : count != 1 ? "y" : ""}`;
+        let hint = true;
+        // TODO: check performance impact of sort
+        for(const record of this.habbit.entries.sort((a, b) => a.date as any - (b.date as any))) {
             if(record.success != this.habbit.positive) continue;
             const entry = document.createElement("div");
             const time = document.createElement("span");
@@ -72,13 +74,16 @@ export class StreakTile extends HTMLElement {
             notes.type = "text";
             notes.className = "plain";
             notes.value = record.notes;
-            notes.placeholder = "žádné poznámky";
+            if(hint) {
+                notes.placeholder = "žádné poznámky";
+                hint = false;
+            }
             notes.addEventListener("input", () => {
                 record.notes = notes.value;
                 this.save();
             });
             entry.appendChild(notes);
-            this.entries.insertAdjacentElement("afterbegin", entry);
+            this.entries.appendChild(entry);
         }
         this.updateStreaks()
     }
